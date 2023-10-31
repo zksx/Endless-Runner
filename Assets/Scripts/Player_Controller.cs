@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private float playerSpeed = 1.0f;
-    private float[] playerSpeeds = {2.0f, 4.0f, 8.0f, 16.0f};
+    private float playerSpeed = 4.0f;
+    private float[] playerSpeeds = {4.0f, 8.0f, 16.0f, 32.0f};
     private float gravityValue = -9.81f;
     public float targetTime = 10.0f;
     private int speed_index = 0;
@@ -25,9 +25,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Move();
+    }
+
+    void Move()
+    {
         groundedPlayer = controller.isGrounded;
 
-        if( (targetTime < 0f) && (set_speeds - 1 > speed_index))
+        if ((targetTime < 0f) && (set_speeds - 1 > speed_index))
         {
             playerSpeed = playerSpeeds[speed_index];
             speed_index += 1;
@@ -39,8 +44,8 @@ public class Player : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, playerSpeed);
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        Vector3 move = new(Input.GetAxis("Horizontal"), 0, playerSpeed);
+        controller.Move(playerSpeed * Time.deltaTime * move);
 
         if (move != Vector3.zero)
         {
@@ -52,5 +57,4 @@ public class Player : MonoBehaviour
         targetTime -= Time.deltaTime;
 
     }
-      
 }
