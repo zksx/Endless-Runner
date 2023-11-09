@@ -15,4 +15,12 @@ public class Collision : MonoBehaviour
             SceneManager.LoadScene("MainMenu");
         }
     }
+
+    private void OnCollisionEnter(UnityEngine.Collision collision)
+    {
+        if(collision.gameObject.CompareTag("FallGround"))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
 }

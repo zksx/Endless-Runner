@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - Map
+  - Road
+  - FallGround
   layers:
   - Default
   - TransparentFX
