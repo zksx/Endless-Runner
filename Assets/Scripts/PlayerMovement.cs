@@ -19,9 +19,12 @@ public class playermovement : MonoBehaviour
 
     public Vector3 updatedVelocity;
 
+    public static GameObject ballObject;
+
     private void Start()
     {
         //Fetch the Rigidbody from the GameObject with this   script attached
+        ballObject = GameObject.Find("Player");
         rb = GetComponent<Rigidbody>();
         updatedVelocity = new Vector3(0f, -9.81f, 0f);
     }

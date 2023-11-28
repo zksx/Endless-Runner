@@ -13,15 +13,12 @@ public class MapSpawner : MonoBehaviour
     public int numCreatedMaps;
     public int numMapPrefabs;
 
-    public GameObject ballObject;
-
     void Start()
     {
         Vector3 mapSpawn = Vector3.zero;
         prevMap = null;
         numCreatedMaps = 0;
         numMapPrefabs = 0;
-        ballObject = GameObject.Find("Player");
 
         // Create the first three maps
         foreach (GameObject Map in Maps)
@@ -38,7 +35,7 @@ public class MapSpawner : MonoBehaviour
     {
         // Get positions of the player and the start/end maps that
         // have been spawned
-        Vector3 ballPos = ballObject.transform.position;
+        Vector3 ballPos = playermovement.ballObject.transform.position;
         Vector3 farthestPos = createdMaps[numCreatedMaps - 1].transform.position;
         Vector3 ballToEndDist = farthestPos - ballPos;
 
@@ -74,6 +71,7 @@ public class MapSpawner : MonoBehaviour
         if(prevMap != null)
         {
             float lastPlatWidth = prevMap.transform.localScale.z;
+
             // Update the new position based on the previous platform
             newMap.transform.position = prevMap.transform.position +
                                         (Vector3.forward * lastPlatWidth * 10f);
