@@ -73,8 +73,10 @@ public class MapSpawner : MonoBehaviour
     {
         if(prevMap != null)
         {
+            float lastPlatWidth = prevMap.transform.localScale.z;
             // Update the new position based on the previous platform
-            newMap.transform.position = prevMap.transform.position + (Vector3.forward * 50f);
+            newMap.transform.position = prevMap.transform.position +
+                                        (Vector3.forward * lastPlatWidth * 10f);
         }
 
         createdMaps.Add(newMap);
