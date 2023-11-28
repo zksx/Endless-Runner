@@ -17,15 +17,25 @@ public class playermovement : MonoBehaviour
     public float x_input;
     public float x_speed = 40f;
 
+    public Vector3 updatedVelocity;
+
     private void Start()
     {
         //Fetch the Rigidbody from the GameObject with this   script attached
         rb = GetComponent<Rigidbody>();
+        updatedVelocity = new Vector3(0f, -9.81f, 0f);
     }
 
     private void Update()
     {
-
+        if(Input.GetKeyDown("left"))
+        {
+            updatedVelocity.x -= 10f;
+        }
+        else if(Input.GetKeyDown("right"))
+        {
+            updatedVelocity.x += 10f;
+        }
     }
 
     private void FixedUpdate()
@@ -35,21 +45,20 @@ public class playermovement : MonoBehaviour
 
     private void Move()
     {
+        // TODO: Implement a system that will incrementally increase the speed
+        //if ((targetTime < 0f) && (set_speeds - 1 > speed_index))
+        //{
 
-        if ((targetTime < 0f) && (set_speeds - 1 > speed_index))
+        //    playerSpeed = playerSpeeds[speed_index];
+        //    speed_index += 1;
+        //    targetTime = 10.0f;
+        //}
+
+        if(updatedVelocity.z < 50f)
         {
-
-            playerSpeed = playerSpeeds[speed_index];
-            speed_index += 1;
-            targetTime = 10.0f;
+            updatedVelocity.z += .25f;
         }
 
-        x_input = Input.GetAxis("Horizontal") * x_speed;
-
-        Vector3 m_Input = new Vector3(x_input, gravity_force, playerSpeed);
-
-        rb.AddForce(m_Input);
-
+        rb.velocity = updatedVelocity;
     }
-
 }
