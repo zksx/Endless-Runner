@@ -75,6 +75,8 @@ public class MapSpawner : MonoBehaviour
             // Update the new position based on the previous platform
             newMap.transform.position = prevMap.transform.position +
                                         (Vector3.forward * lastPlatWidth * 10f);
+
+            
         }
 
         createdMaps.Add(newMap);
