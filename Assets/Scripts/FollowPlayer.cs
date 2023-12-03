@@ -1,22 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class Camera : MonoBehaviour
+public class FollowPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject playerObject;
+    private float smoothFactor = 1.3f;
+    private Vector3 cameraOffset = new Vector3(0, 5, 13);
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        var player = GameObject.FindWithTag("Player");
-        transform.position = player.transform.position;
-        transform.position += new Vector3(0, 5, -13);
+        if (playerObject == null) return;
+
+        Transform playerTransform = playerObject.transform;
+
+        Vector3 newPosition = new Vector3(playerTransform.position.x, playerTransform.position.y + cameraOffset.y, playerTransform.position.z - cameraOffset.z);
+
+        transform.position = Vector3.Lerp(transform.position, newPosition, smoothFactor * Time.deltaTime);
+        transform.LookAt(playerTransform.position);
     }
 }
-
+  
