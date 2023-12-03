@@ -6,7 +6,7 @@ public class playermovement : MonoBehaviour
     Rigidbody rb;
 
     public float targetTime = 10.0f;
-    private float gravity_force = -0.005f;
+    private float gravity_force = -0.2f;
     public float turnSpeed = 40f;
 
     public float x_input;
@@ -30,13 +30,14 @@ public class playermovement : MonoBehaviour
     {
         Move();
         score = Mathf.RoundToInt(transform.position.z);
+        GameData.Score = score;
         scoreText.text = "Score: " + score;
         currentSpeed.text = "Speed: " + speed;
     }
 
     private void Move()
     {
-
+        float xInput = Input.GetAxisRaw("Horizontal");
         int expectedSpeedIncreaseCount = Mathf.FloorToInt(score / 200);
 
         if(expectedSpeedIncreaseCount > speedIncreaseCount)
@@ -49,11 +50,10 @@ public class playermovement : MonoBehaviour
             speed = baseSpeed + speedIncreaseCount;
         }
 
-        float xInput = Input.GetAxis("Horizontal");
-        Vector3 input = new Vector3(xInput, gravity_force, 1f);
-        Vector3 direction = transform.position + input * Time.deltaTime * speed;
+        Vector3 moveDirection = new Vector3(xInput, gravity_force, 1f);
 
-        // Smooth transition for direction change
-        transform.position = Vector3.Lerp(transform.position, direction, Time.deltaTime * turnSpeed);
+        Vector3 targetVelocity = moveDirection * speed;
+
+        rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, turnSpeed * Time.fixedDeltaTime);
     }
 }
